@@ -6,11 +6,11 @@ include_directories(
 )
 
 # Set target name.
-set(TARGET_NAME greeter-client)
+set(TARGET_NAME analyzer-client)
 
 # Add target (binary file or library) for compiling.
 add_executable(${TARGET_NAME}
-  greeter_client.cpp
+  main.cpp
 )
 
 # Add libraries for linking.

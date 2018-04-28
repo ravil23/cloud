@@ -3,15 +3,18 @@ syntax = "proto3";
 package cfa;
 
 service Analyzer {
-  rpc analyze (Tick) returns (AnalyzerResult) {}
+  rpc analyze (Fact) returns (Result) {}
 }
 
-message Tick {
-  int64 price = 1;
-  int64 volume = 2;
+message Fact {
+  string id = 1;
 }
 
-message AnalyzerResult {
-  string category = 1;
-  string weight = 2;
+message Category {
+  string name = 1;
+  double weight = 2;
+}
+
+message Result {
+  repeated Category categories = 1;
 }

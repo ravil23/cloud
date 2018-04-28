@@ -17,6 +17,11 @@ include(cmake/depends.cmake)
 # ---[ Build flags
 include(cmake/build.cmake)
 
+# ---[ Additional headers search path
+include_directories(
+  ${PROJECT_SOURCE_DIR}/include
+)
+
 # ---[ Additional libraries search path
 link_directories(
   ${PROJECT_BINARY_DIR}/lib

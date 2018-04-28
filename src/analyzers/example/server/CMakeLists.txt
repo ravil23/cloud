@@ -3,14 +3,15 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR} 
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}/protobuf
+  ${CMAKE_BINARY_DIR}/src/server
 )
 
 # Set target name.
-set(TARGET_NAME greeter-server)
+set(TARGET_NAME example-server)
 
 # Add target (binary file or library) for compiling.
 add_executable(${TARGET_NAME}
-  greeter_server.cpp
+  main.cpp
 )
 
 # Add libraries for linking.
