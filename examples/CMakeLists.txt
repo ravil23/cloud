@@ -1,0 +1,1 @@
+add_subdirectory(inputs_count_analyzer)

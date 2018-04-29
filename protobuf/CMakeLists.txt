@@ -6,7 +6,7 @@ include_directories(
 
 # List of proto files.
 set(PROTO_FILES
-  analyzer_service.proto
+  AnalyzerService.proto
 )
 
 # Generate code from proto files.

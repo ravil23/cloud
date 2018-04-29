@@ -5,7 +5,7 @@
 
 #include <grpc++/grpc++.h>
 
-#include "analyzer_service.grpc.pb.h"
+#include "AnalyzerService.grpc.pb.h"
 
 
 namespace cfa {
@@ -15,20 +15,20 @@ public:
   explicit AnalyzerClient(const std::string& server_address)
     : stub_(Analyzer::NewStub(grpc::CreateChannel(server_address, grpc::InsecureChannelCredentials()))) {}
 
-  Result analyze(const Fact& fact) {
-    std::cout << "start  AnalyzerClient::analyze " << fact.id() << std::endl;
-    Result result;
+  AnalyzerOutput analyze(const AnalyzerInput& input) {
+    std::cout << "start  AnalyzerClient::analyze " << input.id() << std::endl;
+    AnalyzerOutput output;
 
     grpc::ClientContext context;
-    grpc::Status status = stub_->analyze(&context, fact, &result);
+    grpc::Status status = stub_->analyze(&context, input, &output);
 
     if (not status.ok()) {
       std::stringstream message;
       message << status.error_code() << ": " << status.error_message();
       throw std::runtime_error(message.str());
     }
-    std::cout << "finish AnalyzerClient::analyze " << fact.id() << std::endl;
-    return result;
+    std::cout << "finish AnalyzerClient::analyze " << input.id() << std::endl;
+    return output;
   };
 
 private:
@@ -46,13 +46,16 @@ int main(int argc, char** argv) {
   cfa::AnalyzerClient client(argv[1]);
 
   for (auto i = 2; i < argc; ++i) {
-    cfa::Fact fact;
-    fact.set_id(argv[i]);
+    cfa::AnalyzerInput input;
+    input.set_id(argv[i]);
     try {
-      auto result = client.analyze(fact);
-      std::cout << "Categories count: " << result.categories().size() << std::endl;
+      auto output = client.analyze(input);
+      std::cout << "Categories count: " << output.categories().size() << std::endl;
+      for (const auto& category : output.categories()) {
+        std::cout << category.name() << '\t' << category.score() << '\t' << category.normed_score() << std::endl;
+      }
     } catch (const std::runtime_error& e) {
-      std::cerr << "Error on fact " << fact.id() << ": " << e.what() << std::endl;
+      std::cerr << "Error on input " << input.id() << ": " << e.what() << std::endl;
     }
   }
   return EXIT_SUCCESS;

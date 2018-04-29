@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package cfa;
+
+service Analyzer {
+  rpc analyze (AnalyzerInput) returns (AnalyzerOutput) {}
+}
+
+message AnalyzerInput {
+  string id = 1;
+}
+
+message AnalyzerOutput {
+  message Category {
+    string name = 1;
+    double score = 2;
+    double normed_score = 3;
+  }
+
+  repeated Category categories = 1;
+}

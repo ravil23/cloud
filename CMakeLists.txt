@@ -30,4 +30,4 @@ link_directories(
 # ---[ Subdirectories
 add_subdirectory(protobuf)
 add_subdirectory(src)
-# add_subdirectory(test)
+add_subdirectory(examples)

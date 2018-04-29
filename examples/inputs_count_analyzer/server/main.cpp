@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  cfa::Server<cfa::ExampleAnalyzer> server(argv[1]);
+  cfa::Server<cfa::InputsCountAnalyzer> server(argv[1]);
   server.run();
 
   return EXIT_SUCCESS;

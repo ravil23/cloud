@@ -2,6 +2,7 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR} 
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/../lib
   ${CMAKE_BINARY_DIR}/protobuf
   ${CMAKE_BINARY_DIR}/src/server
 )
@@ -16,6 +17,7 @@ add_executable(${TARGET_NAME}
 
 # Add libraries for linking.
 target_link_libraries(${TARGET_NAME}
+  inputs_count_model
   protobuf::libprotobuf
   gRPC::grpc++_reflection
   cfa_protobuf
