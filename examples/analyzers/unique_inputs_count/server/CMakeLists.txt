@@ -8,7 +8,7 @@ include_directories(
 )
 
 # Set target name.
-set(TARGET_NAME example-server)
+set(TARGET_NAME unique_inputs_counter-server)
 
 # Add target (binary file or library) for compiling.
 add_executable(${TARGET_NAME}
@@ -17,9 +17,10 @@ add_executable(${TARGET_NAME}
 
 # Add libraries for linking.
 target_link_libraries(${TARGET_NAME}
-  inputs_count_model
   protobuf::libprotobuf
   gRPC::grpc++_reflection
-  cfa_protobuf
-  cfa_grpc
+  glog::glog
+  cloud_protobuf
+  cloud_grpc
+  unique_inputs_counter
 )

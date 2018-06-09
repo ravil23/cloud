@@ -1,30 +1,53 @@
-#include <iostream>
-#include <memory>
-#include <string>
+#pragma once
 
+#include <memory>
+
+#include <glog/logging.h>
 #include <grpc++/grpc++.h>
 
+#include "utils/lexical_cast.h"
 
-namespace cfa {
+
+namespace cloud {
 
 template <class Service>
 class Server {
 public:
-  explicit Server(const std::string& port)
-    : address_("0.0.0.0:" + port) {}
+  Server() {
+    auto env_name = std::getenv("SERVER_NAME");
+    if (not env_name) {
+      throw std::runtime_error("Environment variable 'SERVER_NAME' not found.");
+    }
+
+    auto env_port = std::getenv("SERVER_PORT");
+    if (not env_port) {
+      throw std::runtime_error("Environment variable 'SERVER_PORT' not found.");
+    }
+
+    FLAGS_alsologtostderr = 1;
+    google::InitGoogleLogging(env_name);
+    name_ = env_name;
+    port_ = utils::lexical_cast<unsigned int>(env_port);
+  }
 
   void run() {
+    DLOG(INFO) << "Run server " << name_ << " on port " << port_ << "...";
+
     Service service;
     grpc::ServerBuilder builder;
-    builder.AddListeningPort(address_, grpc::InsecureServerCredentials());
+    auto address = "0.0.0.0:" + std::to_string(port_);
+
+    builder.AddListeningPort(address, grpc::InsecureServerCredentials()); // TODO: ssl https://github.com/grpc/grpc/issues/9593
     builder.RegisterService(&service);
     std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-    std::cout << "Server listening on " << address_ << std::endl;
+
+    LOG(INFO) << "Server " << name_ << " listening on " << address;
     server->Wait();
   }
 
 private:
-  std::string address_;
+  std::string name_;
+  unsigned int port_;
 };
 
-} // namespace cfa
+} // namespace cloud

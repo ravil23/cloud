@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 3.0.0)
 
 # ---[ Project
-project(cfa CXX)
+project(cloud CXX)
 set(PROJECT_VERSION 1.0.1)
-enable_testing()
 
 # ---[ Install path
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/install)
@@ -26,6 +25,9 @@ include_directories(
 link_directories(
   ${PROJECT_BINARY_DIR}/lib
 )
+
+# ---[ Test
+enable_testing()
 
 # ---[ Subdirectories
 add_subdirectory(protobuf)

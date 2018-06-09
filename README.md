@@ -22,6 +22,20 @@ ctest
 
 All commands run from build directory.
 
+### Unique Inputs Counter
+
+Run server:
+```
+export SERVER_NAME=UniqueInputsCounter; \
+export SERVER_PORT=9001; \
+bin/unique_inputs_counter-server
+```
+
+Run client:
+```
+bin/analyzer-client 0.0.0.0:9001 1 2 3 4 5
+```
+
 ## Documentation
 
 ### Read

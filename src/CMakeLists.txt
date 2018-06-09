@@ -1,1 +1,1 @@
-add_subdirectory(analyzers)
+add_subdirectory(analyzer_client)

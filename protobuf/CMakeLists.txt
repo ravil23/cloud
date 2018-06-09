@@ -14,13 +14,13 @@ protobuf_generate_cpp(PROTO_SOURCES PROTO_HEADERS ${CMAKE_CURRENT_BINARY_DIR} ${
 grpc_generate_cpp(GRPC_SOURCES GRPC_HEADERS ${CMAKE_CURRENT_BINARY_DIR} ${PROTO_FILES})
 
 # Add library for generated Protobufs.
-set(PROJECT_PROTO_LIB cfa_protobuf)
+set(PROJECT_PROTO_LIB cloud_protobuf)
 add_library(${PROJECT_PROTO_LIB} STATIC
   ${PROTO_SOURCES}
 )
 
 # Add library for generated gRPC services.
-set(PROJECT_GRPC_LIB cfa_grpc)
+set(PROJECT_GRPC_LIB cloud_grpc)
 add_library(${PROJECT_GRPC_LIB} STATIC
   ${GRPC_SOURCES}
 )

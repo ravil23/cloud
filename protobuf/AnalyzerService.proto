@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package cfa;
+package pb;
 
 service Analyzer {
   rpc analyze (AnalyzerInput) returns (AnalyzerOutput) {}
