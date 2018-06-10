@@ -3,7 +3,7 @@
 ## Libraries and dependecies
 * [CMake](https://cmake.org/)
 * [Protobuf 3](https://github.com/google/protobuf)
-* [gRPC](https://github.com/grpc/grpc)
+* [grpc](https://github.com/grpc/grpc)
 * [gtest](https://github.com/google/googletest)
 * [glog](https://github.com/google/glog)
 
@@ -14,7 +14,7 @@ All binaries collected in folder 'build/bin' after executing commands:
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
-make all -j20
+make all -j8
 ctest
 ```
 
@@ -33,7 +33,7 @@ bin/unique_inputs_counter-server
 
 Run client:
 ```
-bin/analyzer-client 0.0.0.0:9001 1 2 3 4 5
+bin/protobuf-writer 3 | bin/analyzer-client 0.0.0.0:9001 | bin/protobuf-reader AnalyzerOutput info
 ```
 
 ## Documentation
@@ -48,7 +48,11 @@ doxygen doc/config.txt
 ```
 
 ## TODO
-0. Read/Write data from/to stream.
 1. Docker images for build and for deploy.
 2. Hosting Travis/Appveyor.
 3. Secure gRPC.
+4. Add argument parser.
+5. Implement protobuf formatter.
+6. Refactor protobuf reader tool.
+7. Write readme files for examples.
+8. Write help for local targets.

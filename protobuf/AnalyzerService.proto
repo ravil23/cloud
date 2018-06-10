@@ -8,6 +8,7 @@ service Analyzer {
 
 message AnalyzerInput {
   string id = 1;
+  int64 timestamp = 2;
 }
 
 message AnalyzerOutput {

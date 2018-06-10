@@ -1,1 +1,2 @@
 add_subdirectory(analyzer_client)
+add_subdirectory(tools)

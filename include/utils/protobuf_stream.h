@@ -1,8 +1,6 @@
 #pragma once
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <fstream>
 
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -18,11 +16,11 @@ class OutputProtobufStream;
 class InputProtobufStream {
 public:
   explicit InputProtobufStream(const std::string& path)
-    : handle_(open(path.c_str(), O_RDONLY))
-    , fin_(handle_) {}
+    : std_stream_(path)
+    , pb_stream_(&std_stream_) {}
 
   inline bool is_open() {
-    return handle_ != -1;
+    return std_stream_.is_open();
   }
 
   bool read(google::protobuf::MessageLite& message) {
@@ -30,11 +28,14 @@ public:
       return false;
     }
 
+    // Clear output message.
+    message.Clear();
+
     // We create a new coded stream for each message.  Don't worry, this is fast,
     // and it makes sure the 64MB total size limit is imposed per-message rather
     // than on the whole stream.  (See the CodedInputStream interface for more
     // info on this limit.)
-    google::protobuf::io::CodedInputStream input(&fin_);
+    google::protobuf::io::CodedInputStream input(&pb_stream_);
 
     // Read the size.
     uint32_t size;
@@ -67,25 +68,19 @@ public:
     return *this;
   }
 
-  ~InputProtobufStream() {
-    if (is_open()) {
-      close(handle_);
-    }
-  }
-
 private:
-  int handle_;
-  google::protobuf::io::FileInputStream fin_;
+  std::ifstream std_stream_;
+  google::protobuf::io::IstreamInputStream pb_stream_;
 };
 
 class OutputProtobufStream {
 public:
   explicit OutputProtobufStream(const std::string& path)
-    : handle_(open(path.c_str(), O_CREAT | O_WRONLY))
-    , fout_(handle_) {}
+    : std_stream_(path)
+    , pb_stream_(&std_stream_) {}
 
   inline bool is_open() {
-    return handle_ != -1;
+    return std_stream_.is_open();
   }
 
   bool write(const google::protobuf::MessageLite& message) {
@@ -94,7 +89,7 @@ public:
     }
 
     // We create a new coded stream for each message. Don't worry, this is fast.
-    google::protobuf::io::CodedOutputStream output(&fout_);
+    google::protobuf::io::CodedOutputStream output(&pb_stream_);
 
     // Write the size.
     const int size = message.ByteSize();
@@ -123,15 +118,9 @@ public:
     return *this;
   }
 
-  ~OutputProtobufStream() {
-    if (is_open()) {
-      close(handle_);
-    }
-  }
-
 private:
-  int handle_;
-  google::protobuf::io::FileOutputStream fout_;
+  std::ofstream std_stream_;
+  google::protobuf::io::OstreamOutputStream pb_stream_;
 };
 
 } // namespace utils
