@@ -1,1 +1,1 @@
-add_subdirectory(unique_inputs_count)
+add_subdirectory(unique_inputs_counter)

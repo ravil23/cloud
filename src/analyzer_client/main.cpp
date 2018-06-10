@@ -8,6 +8,8 @@
 
 #include "AnalyzerService.grpc.pb.h"
 
+#include "utils/protobuf_stream.h"
+
 
 namespace cloud {
 
@@ -41,19 +43,25 @@ private:
 } // namespace cloud
 
 int main(int argc, char** argv) {
-  if (argc <= 2) {
-    std::cerr << "Usage: <CLIENT_BINARY> <SERVER_ADDRESS:PORT> <ID1> <ID2> ..." << std::endl;
+  if (argc < 2) {
+    std::cerr << "Usage: <PROGRAM> <SERVER_ADDRESS:PORT> [<INPUT_STREAM> (default=/dev/stdin)]" << std::endl;
     return EXIT_FAILURE;
+  }
+  const std::string program(argv[0]);
+  const std::string server_address(argv[1]);
+  std::string input_stream("/dev/stdin");
+  if (argc > 2) {
+    input_stream = argv[2];
   }
 
   FLAGS_alsologtostderr = 1;
-  google::InitGoogleLogging(argv[0]);
+  google::InitGoogleLogging(program.c_str());
 
-  cloud::AnalyzerClient client(argv[1]);
+  cloud::AnalyzerClient client(server_address);
 
-  for (auto i = 2; i < argc; ++i) { // TODO: read from stream
-    pb::AnalyzerInput input;
-    input.set_id(argv[i]);
+  cloud::utils::InputProtobufStream fin(input_stream);
+  pb::AnalyzerInput input;
+  while (fin.read(input)) {
     try {
       auto output = client.analyze(input);
       std::stringstream ss;

@@ -1,4 +1,4 @@
-# Cloud Finance Analyzer (CFA)
+# Cloud Microservices C++
 
 ## Libraries and dependecies
 * [CMake](https://cmake.org/)
@@ -46,3 +46,9 @@ Open in your browser file `doc/html/index.html`
 ```
 doxygen doc/config.txt
 ```
+
+## TODO
+0. Read/Write data from/to stream.
+1. Docker images for build and for deploy.
+2. Hosting Travis/Appveyor.
+3. Secure gRPC.

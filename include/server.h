@@ -37,7 +37,7 @@ public:
     grpc::ServerBuilder builder;
     auto address = "0.0.0.0:" + std::to_string(port_);
 
-    builder.AddListeningPort(address, grpc::InsecureServerCredentials()); // TODO: ssl https://github.com/grpc/grpc/issues/9593
+    builder.AddListeningPort(address, grpc::InsecureServerCredentials());
     builder.RegisterService(&service);
     std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
 
