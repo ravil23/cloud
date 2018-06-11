@@ -63,7 +63,7 @@ public:
 int main(int argc, char** argv) {
   const std::string usage("bin/protobuf-reader"
     " <MESSAGE_TYPE: {AnalyzerInput, AnalyzerOutput}>"
-    " <FORMAT: {info, text, json}>");
+    " <FORMAT: {tsv, text, json}>");
 
   for (int i = 1; i < argc; ++i) {
     if (std::string(argv[i]) == "-h" or std::string(argv[i]) == "--help") {
