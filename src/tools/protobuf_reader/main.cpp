@@ -14,8 +14,8 @@ class AnalyzerInputFormatter : public cloud::utils::ProtobufFormatter {
 public:
   static const std::string info(const pb::AnalyzerInput& analyzer_input) {
     std::stringstream ss;
-    ss << "ID: " << analyzer_input.id() <<
-      ", Timestamp: " << analyzer_input.timestamp();
+    ss << "ID: " << analyzer_input.id()
+      << ", Timestamp: " << analyzer_input.timestamp();
     return ss.str();
   }
 };
@@ -44,10 +44,24 @@ public:
 } // anonymous namespace
 
 int main(int argc, char** argv) {
+  const std::string usage("bin/protobuf-reader"
+    " <MESSAGE_TYPE: {AnalyzerInput, AnalyzerOutput}>"
+    " <FORMAT: {info, text, json}>");
+
+  for (int i = 1; i < argc; ++i) {
+    if (std::string(argv[i]) == "-h" or std::string(argv[i]) == "--help") {
+      std::cerr << "Protobuf Reader Tool" << std::endl
+        << "Input:" << std::endl
+        << " - Protobuf messages from STDIN stream" << std::endl
+        << "Output:" << std::endl
+        << " - Formatted messages to STDOUT stream" << std::endl
+        << "Usage:" << std::endl << usage << std::endl;
+      return EXIT_SUCCESS;
+    }
+  }
+
   if (argc != 3) {
-    std::cerr << "Usage: protobuf-reader"
-      " <MESSAGE_TYPE: {AnalyzerInput, AnalyzerOutput}>"
-      " <FORMAT: {info, text, json}>" << std::endl;
+    std::cerr << "Usage:" << usage << std::endl;
     return EXIT_FAILURE;
   }
 

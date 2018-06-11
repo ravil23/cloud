@@ -40,12 +40,26 @@ private:
 } // namespace cloud
 
 int main(int argc, char** argv) {
+  const std::string usage("bin/analyzer-client"
+    " <SERVER_HOST:PORT>");
+
+  for (int i = 1; i < argc; ++i) {
+    if (std::string(argv[i]) == "-h" or std::string(argv[i]) == "--help") {
+      std::cerr << "Analyzer Client" << std::endl
+        << "Input:" << std::endl
+        << " - pb::AnalyzerInput to STDIN stream" << std::endl
+        << "Output:" << std::endl
+        << " - pb::AnalyzerOutput to STDOUT stream" << std::endl
+        << "Usage:" << std::endl << usage << std::endl;
+      return EXIT_SUCCESS;
+    }
+  }
+
   if (argc != 2) {
-    std::cerr << "Usage: analyzer-client <SERVER_HOST:PORT>" << std::endl;
+    std::cerr << usage << std::endl;
     return EXIT_FAILURE;
   }
 
-  const std::string program(argv[0]);
   const std::string server_address(argv[1]);
 
   cloud::AnalyzerClient client(server_address);
