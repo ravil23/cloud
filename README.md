@@ -51,5 +51,5 @@ doxygen doc/config.txt
 1. Docker images for build and for deploy.
 2. Hosting Travis/Appveyor.
 3. Secure gRPC.
-4. Implement protobuf formatter.
-5. Refactor protobuf reader/writer tool.
+4. Refactor protobuf reader/writer tool.
+5. Add comments.
