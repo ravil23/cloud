@@ -12,19 +12,18 @@ namespace {
 
 class AnalyzerInputFormatter : public cloud::utils::ProtobufFormatter {
 public:
-  static const std::string info(const pb::AnalyzerInput& analyzer_input) {
+  static const std::string tsv(const pb::AnalyzerInput& analyzer_input) {
     std::stringstream ss;
-    ss << "ID: " << analyzer_input.id()
-      << ", Timestamp: " << analyzer_input.timestamp();
+    ss << analyzer_input.id() << '\t' << analyzer_input.timestamp();
     return ss.str();
   }
 };
 
 class AnalyzerOutputFormatter : public cloud::utils::ProtobufFormatter {
 public:
-  static const std::string info(const pb::AnalyzerOutput& analyzer_output) {
+  static const std::string tsv(const pb::AnalyzerOutput& analyzer_output) {
     std::stringstream ss;
-    ss << "Categories[" << analyzer_output.categories().size() << "]: {";
+    ss << "[";
     auto is_first = true;
     for (const auto& category : analyzer_output.categories()) {
       if (not is_first) {
@@ -32,11 +31,29 @@ public:
       } else {
         is_first = false;
       }
-      ss << category.name() <<
-        " : " << category.score() <<
-        " : " << category.normed_score();
+      ss << category.name();
     }
-    ss << "}";
+    ss << "]\t[";
+    is_first = true;
+    for (const auto& category : analyzer_output.categories()) {
+      if (not is_first) {
+        ss << ", ";
+      } else {
+        is_first = false;
+      }
+      ss << category.score();
+    }
+    ss << "]\t[";
+    is_first = true;
+    for (const auto& category : analyzer_output.categories()) {
+      if (not is_first) {
+        ss << ", ";
+      } else {
+        is_first = false;
+      }
+      ss << category.normed_score();
+    }
+    ss << "]";
     return ss.str();
   }
 };
@@ -73,7 +90,7 @@ int main(int argc, char** argv) {
     throw std::invalid_argument("Invalid message type: " + message_type);
   }
 
-  if (format != "info") {
+  if (format != "tsv" and format != "text" and format != "json") {
     throw std::invalid_argument("Invalid format: " + format);
   }
 
@@ -81,15 +98,23 @@ int main(int argc, char** argv) {
   if (message_type == "AnalyzerInput") {
     pb::AnalyzerInput analyzer_input;
     while (pbin.read(analyzer_input)) {
-      if (format == "info") {
-        std::cout << AnalyzerInputFormatter::info(analyzer_input) << std::endl;
+      if (format == "tsv") {
+        std::cout << AnalyzerInputFormatter::tsv(analyzer_input) << std::endl;
+      } else if (format == "text") {
+        std::cout << AnalyzerInputFormatter::text(analyzer_input) << std::endl;
+      } else if (format == "json") {
+        std::cout << AnalyzerInputFormatter::json(analyzer_input) << std::endl;
       }
     }
   } else if (message_type == "AnalyzerOutput") {
     pb::AnalyzerOutput analyzer_output;
     while (pbin.read(analyzer_output)) {
-      if (format == "info") {
-        std::cout << AnalyzerOutputFormatter::info(analyzer_output) << std::endl;
+      if (format == "tsv") {
+        std::cout << AnalyzerOutputFormatter::tsv(analyzer_output) << std::endl;
+      } else if (format == "text") {
+        std::cout << AnalyzerInputFormatter::text(analyzer_output) << std::endl;
+      } else if (format == "json") {
+        std::cout << AnalyzerInputFormatter::json(analyzer_output) << std::endl;
       }
     }
   }

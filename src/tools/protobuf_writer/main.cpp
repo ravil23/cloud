@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
   }
 
   cloud::utils::OutputProtobufStream pbout("/dev/stdout");
-  if (message_type != "AnalyzerInput") {
+  if (message_type == "AnalyzerInput") {
     pb::AnalyzerInput data;
     for (auto i = 1; i <= count; ++i) {
       data.set_id(std::to_string(i));

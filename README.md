@@ -1,4 +1,4 @@
-# Cloud Microservices C++
+# Google Cloud Microservices C++
 
 ## Libraries and dependecies
 * [CMake](https://cmake.org/)
