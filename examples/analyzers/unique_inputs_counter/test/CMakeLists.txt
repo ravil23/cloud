@@ -25,4 +25,4 @@ target_link_libraries(${TARGET_NAME}
 )
 
 # Add test.
-gtest_add_tests(${TARGET_NAME} "" AUTO)
+gtest_discover_tests(${TARGET_NAME})

@@ -33,7 +33,31 @@ bin/unique_inputs_counter-server
 
 Run client:
 ```
-bin/protobuf-writer 3 | bin/analyzer-client 0.0.0.0:9001 | bin/protobuf-reader AnalyzerOutput info
+bin/protobuf-writer AnalyzerInput 3 | bin/analyzer-client 0.0.0.0:9001 | bin/protobuf-reader AnalyzerOutput json
+```
+
+## Docker
+
+### Buid Environment image
+```
+docker/env/make.sh
+```
+
+### Buid Cloud image
+```
+docker/build/make.sh
+```
+
+### Unique Inputs Counter
+
+Run server:
+```
+docker run -it --rm -e SERVER_NAME=UniqueInputsCounter -e SERVER_PORT=9001 -p 9001:9001 cloud-build bin/unique_inputs_counter-server
+```
+
+Run client:
+```
+bin/protobuf-writer AnalyzerInput 3 | bin/analyzer-client 0.0.0.0:9001 | bin/protobuf-reader AnalyzerOutput json
 ```
 
 ## Documentation
@@ -48,8 +72,8 @@ doxygen doc/config.txt
 ```
 
 ## TODO
-1. Docker images for build and for deploy.
-2. Hosting Travis/Appveyor.
+1. Add comments.
+2. Refactor protobuf reader/writer tool.
 3. Secure gRPC.
-4. Refactor protobuf reader/writer tool.
-5. Add comments.
+4. Add manager.
+5. Hosting Travis/Appveyor.

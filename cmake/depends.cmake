@@ -8,4 +8,4 @@ find_package(GRPC REQUIRED)
 find_package(glog REQUIRED)
 
 # ---[ gTEST
-find_package(gtest REQUIRED)
+find_package(GTest REQUIRED)

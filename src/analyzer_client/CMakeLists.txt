@@ -16,7 +16,7 @@ add_executable(${TARGET_NAME}
 # Add libraries for linking.
 target_link_libraries(${TARGET_NAME}
   protobuf::libprotobuf
-  gRPC::grpc++_reflection
+  grpc::grpc++_reflection
   glog::glog
   cloud_protobuf
   cloud_grpc

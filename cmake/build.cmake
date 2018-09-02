@@ -17,4 +17,4 @@ else()
 endif()
 
 # Add default compiler flags.
-add_compile_options(-std=c++14)
+add_compile_options(-std=c++14 -Wall -Werror)
