@@ -18,24 +18,6 @@ make all -j8
 ctest
 ```
 
-## Usage examples
-
-All commands run from build directory.
-
-### Unique Inputs Counter
-
-Run server:
-```
-export SERVER_NAME=UniqueInputsCounter; \
-export SERVER_PORT=9001; \
-bin/unique_inputs_counter-server
-```
-
-Run client:
-```
-bin/protobuf-writer AnalyzerInput 3 | bin/analyzer-client 0.0.0.0:9001 | bin/protobuf-reader AnalyzerOutput json
-```
-
 ## Docker
 
 ### Buid Environment image
@@ -48,11 +30,21 @@ docker/env/make.sh
 docker/build/make.sh
 ```
 
+## Usage examples
+
+All commands run from build directory.
+
 ### Unique Inputs Counter
 
 Run server:
 ```
-docker run -it --rm -e SERVER_NAME=UniqueInputsCounter -e SERVER_PORT=9001 -p 9001:9001 cloud-build bin/unique_inputs_counter-server
+export SERVER_NAME=UniqueInputsCounter; \
+export SERVER_PORT=9001; \
+bin/unique_inputs_counter-server
+```
+or
+```
+docker run -it --rm -e SERVER_NAME=UniqueInputsCounter -e SERVER_PORT=9001 -p 9001:9001 cloud-bin bin/unique_inputs_counter-server
 ```
 
 Run client:
