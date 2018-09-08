@@ -7,10 +7,15 @@
 * [gtest](https://github.com/google/googletest)
 * [glog](https://github.com/google/glog)
 
-## Instructions of local work
+## Local instructions
 
-### Build locally
-All binaries collected in folder 'build/bin' after executing commands:
+### Prerequirements
+
+See `docker/env/Dockerfile` for dependecies installation on Ubuntu.
+
+### Build source
+
+All binaries collected in folder `build/bin` after executing commands:
 ```
 mkdir build
 cd build
@@ -37,7 +42,7 @@ bin/protobuf-writer AnalyzerInput 3 \
     | bin/protobuf-reader AnalyzerOutput json
 ```
 
-## Instruction of working via Docker
+## Docker instructions
 
 ### Buid Environment image
 ```
@@ -56,7 +61,7 @@ Create network:
 docker network create --driver bridge cloud-net
 ```
 
-Run server:
+#### Run server
 ```
 docker run -dit --rm \
     --name cloud-server \
@@ -67,7 +72,7 @@ docker run -dit --rm \
     bin/unique_inputs_counter-server
 ```
 
-Run client:
+#### Run client
 ```
 docker run -dit --rm \
     --name cloud-client \
@@ -78,7 +83,7 @@ docker exec -i cloud-client bin/protobuf-writer AnalyzerInput 3 \
     | docker exec -i cloud-client bin/protobuf-reader AnalyzerOutput json
 ```
 
-Clean created containers and network:
+#### Clean created containers and network
 ```
 docker stop cloud-server cloud-client
 docker network rm cloud-net
