@@ -69,7 +69,7 @@ doxygen doc/config.txt
 3. Secure gRPC.
 4. Add manager.
 5. Hosting Travis/Appveyor.
-6. Docker Lite images
+6. Docker Network.
 7. [Bazel](https://github.com/bazelbuild/bazel)
 8. [Benchmark](https://github.com/google/benchmark)
 9. [Grafana](https://github.com/grafana/grafana)
