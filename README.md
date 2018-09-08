@@ -7,8 +7,9 @@
 * [gtest](https://github.com/google/googletest)
 * [glog](https://github.com/google/glog)
 
-## Building
+## Instructions of local work
 
+### Build locally
 All binaries collected in folder 'build/bin' after executing commands:
 ```
 mkdir build
@@ -18,38 +19,69 @@ make all -j8
 ctest
 ```
 
-## Docker
+### Usage examples
+
+All commands run from build directory.
+
+#### Run server
+```
+export SERVER_NAME=UniqueInputsCounter; \
+export SERVER_PORT=9001; \
+bin/unique_inputs_counter-server
+```
+
+#### Run client
+```
+bin/protobuf-writer AnalyzerInput 3 \
+    | bin/analyzer-client 0.0.0.0:9001 \
+    | bin/protobuf-reader AnalyzerOutput json
+```
+
+## Instruction of working via Docker
 
 ### Buid Environment image
 ```
 docker/env/make.sh
 ```
 
-### Buid Cloud image
+### Buid Cloud binaries image
 ```
-docker/build/make.sh
+docker/bin/make.sh
 ```
 
-## Usage examples
+### Usage examples
 
-All commands run from build directory.
-
-### Unique Inputs Counter
+Create network:
+```
+docker network create --driver bridge cloud-net
+```
 
 Run server:
 ```
-export SERVER_NAME=UniqueInputsCounter; \
-export SERVER_PORT=9001; \
-bin/unique_inputs_counter-server
-```
-or
-```
-docker run -it --rm -e SERVER_NAME=UniqueInputsCounter -e SERVER_PORT=9001 -p 9001:9001 cloud-bin bin/unique_inputs_counter-server
+docker run -dit --rm \
+    --name cloud-server \
+    --network cloud-net \
+    -e SERVER_NAME=UniqueInputsCounter \
+    -e SERVER_PORT=9001 \
+    cloud-bin \
+    bin/unique_inputs_counter-server
 ```
 
 Run client:
 ```
-bin/protobuf-writer AnalyzerInput 3 | bin/analyzer-client 0.0.0.0:9001 | bin/protobuf-reader AnalyzerOutput json
+docker run -dit --rm \
+    --name cloud-client \
+    --network cloud-net \
+    cloud-bin
+docker exec -i cloud-client bin/protobuf-writer AnalyzerInput 3 \
+    | docker exec -i cloud-client bin/analyzer-client cloud-server:9001 \
+    | docker exec -i cloud-client bin/protobuf-reader AnalyzerOutput json
+```
+
+Clean created containers and network:
+```
+docker stop cloud-server cloud-client
+docker network rm cloud-net
 ```
 
 ## Documentation
@@ -69,7 +101,6 @@ doxygen doc/config.txt
 3. Secure gRPC.
 4. Add manager.
 5. Hosting Travis/Appveyor.
-6. Docker Network.
-7. [Bazel](https://github.com/bazelbuild/bazel)
-8. [Benchmark](https://github.com/google/benchmark)
-9. [Grafana](https://github.com/grafana/grafana)
+6. [Bazel](https://github.com/bazelbuild/bazel)
+7. [Benchmark](https://github.com/google/benchmark)
+8. [Grafana](https://github.com/grafana/grafana)
