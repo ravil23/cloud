@@ -101,10 +101,22 @@ doxygen doc/config.txt
 ```
 
 ## TODO
-1. Add categories in analyzer lib.
-2. Secure gRPC.
-3. Add manager.
-4. Hosting Travis/Appveyor.
-5. [Bazel](https://github.com/bazelbuild/bazel)
-6. [Benchmark](https://github.com/google/benchmark)
-7. [Grafana](https://github.com/grafana/grafana)
+1. Features:
+ - Add categories into analyzer lib.
+ - Add manager.
+ - Add routing.
+ - Integration tests.
+2. Frontend:
+ - [Apache Server](https://httpd.apache.org)
+ - [Go Server](https://golang.org)
+3. Deploy to Google Cloud.
+4. Continuous integration:
+ - [GitLab](https://about.gitlab.com)
+ - [Jenkins](https://jenkins.io)
+5. Performance:
+ - [JMeter](https://jmeter.apache.org)
+ - [Benchmark](https://github.com/google/benchmark)
+6. Build system:
+ - [Bazel](https://github.com/bazelbuild/bazel)
+7. Metrics:
+ - [Grafana](https://github.com/grafana/grafana)
