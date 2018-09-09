@@ -20,8 +20,8 @@ public:
   /**
    * \brief Constructor.
    * \throw   std::runtime_error  If environment variables are not valid.
-   * \eparam  SERVER_NAME  Name of server instance.
-   * \eparam  SERVER_PORT  Port of server instance.
+   * \param[in]  SERVER_NAME  Name of server instance (environment variable).
+   * \param[in]  SERVER_PORT  Port of server instance (environment variable).
    */
   Server() {
     auto env_name = std::getenv("SERVER_NAME");

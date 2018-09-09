@@ -9,10 +9,13 @@
 namespace cloud {
 
 /**
- * \brief Calculate unique inputs count.
+ * \brief Unique inputs counter for corresponded service.
  */
 class UniqueInputsCounter {
 public:
+  /**
+   * \brief Unique inputs counters result.
+   */
   struct Result {
     bool new_input_ = false;
     size_t unique_count_ = 0u;
