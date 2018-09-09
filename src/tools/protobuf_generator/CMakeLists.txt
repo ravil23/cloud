@@ -6,7 +6,7 @@ include_directories(
 )
 
 # Set target name.
-set(TARGET_NAME protobuf-writer)
+set(TARGET_NAME protobuf-generator)
 
 # Add target (binary file or library) for compiling.
 add_executable(${TARGET_NAME}

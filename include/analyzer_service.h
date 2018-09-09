@@ -8,8 +8,18 @@
 
 namespace cloud {
 
+/**
+ * \brief Virtual wrapper for grpc analyzer service.
+ */
 class AnalyzerService : public pb::Analyzer::Service {
 public:
+  /**
+   * \brief Analyze input and produce output.
+   * \param[out] context     Pointer to server context.
+   * \param[in]  input_ptr   Pointer to input object.
+   * \param[out] output_ptr  Pointer to output object.
+   * \return  Analyzing status.
+   */
   grpc::Status analyze(grpc::ServerContext* context
     , const pb::AnalyzerInput* input_ptr
     , pb::AnalyzerOutput* output_ptr) override final {
@@ -25,6 +35,12 @@ public:
   }
 
 private:
+  /**
+   * \brief Virtual method for analyzing implementation.
+   * \param[in]  input   Input object.
+   * \param[out] output  Output object.
+   * \return  Analyzing status.
+   */
   virtual grpc::Status analyzeImpl(const pb::AnalyzerInput& input
     , pb::AnalyzerOutput& output) = 0;
 };

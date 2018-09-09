@@ -1,2 +1,2 @@
 add_subdirectory(protobuf_reader)
-add_subdirectory(protobuf_writer)
+add_subdirectory(protobuf_generator)

@@ -13,16 +13,32 @@ namespace utils {
 class InputProtobufStream;
 class OutputProtobufStream;
 
+/**
+ * \brief Implementation of input protobuf stream.
+ */
 class InputProtobufStream {
 public:
+  /**
+   * \brief Constructor.
+   * \param[in]  path  Path of input stream.
+   */
   explicit InputProtobufStream(const std::string& path)
     : std_stream_(path)
     , pb_stream_(&std_stream_) {}
 
+  /**
+   * \brief Check if stream is open.
+   * \return  Stream status.
+   */
   inline bool is_open() {
     return std_stream_.is_open();
   }
 
+  /**
+   * \brief Read message from stream.
+   * \param[out] message  Readed message.
+   * \return  Read status.
+   */
   bool read(google::protobuf::MessageLite& message) {
     if (not is_open()) {
       return false;
@@ -61,6 +77,12 @@ public:
     return true;
   }
 
+  /**
+   * \brief Input stream operator.
+   * \throw      std::runtime_error  If message reading status is false.
+   * \param[out] message  Readed message.
+   * \return  Reference to this object.
+   */
   InputProtobufStream& operator>>(google::protobuf::MessageLite& message) {
     if (not read(message)) {
       throw std::runtime_error("Can't read next message.");
@@ -73,16 +95,32 @@ private:
   google::protobuf::io::IstreamInputStream pb_stream_;
 };
 
+/**
+ * \brief Implementation of output protobuf stream.
+ */
 class OutputProtobufStream {
 public:
+  /**
+   * \brief Constructor.
+   * \param[out] path  Path of output stream.
+   */
   explicit OutputProtobufStream(const std::string& path)
     : std_stream_(path)
     , pb_stream_(&std_stream_) {}
 
+  /**
+   * \brief Check if stream is open.
+   * \return  Stream status.
+   */
   inline bool is_open() {
     return std_stream_.is_open();
   }
 
+  /**
+   * \brief Write message from stream.
+   * \param[in]  message  Message for writting.
+   * \return  Write status.
+   */
   bool write(const google::protobuf::MessageLite& message) {
     if (not is_open()) {
       return false;
@@ -111,6 +149,12 @@ public:
     return true;
   }
 
+  /**
+   * \brief Output stream operator.
+   * \throw      std::runtime_error  If message writting status is false.
+   * \param[out] message  Message for writting.
+   * \return  Reference to this object.
+   */
   OutputProtobufStream& operator<<(const google::protobuf::MessageLite& message) {
     if (not write(message)) {
       throw std::runtime_error("Can't write next message.");

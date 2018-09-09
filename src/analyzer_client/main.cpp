@@ -12,12 +12,25 @@
 
 namespace cloud {
 
+/**
+ * \brief Client for analyzer service.
+ */
 class AnalyzerClient {
 public:
+  /**
+   * \brief Constructor.
+   * \param[in]  server_address  Service address in format <HOST:PORT>.
+   */
   explicit AnalyzerClient(const std::string& server_address)
     : stub_(pb::Analyzer::NewStub(grpc::CreateChannel(server_address
       , grpc::InsecureChannelCredentials()))) {}
 
+  /**
+   * \brief Analyzing method.
+   * \throw      std::runtime_error  If service return error status.
+   * \param[in]  input  Analyzer input.
+   * \return  Analyzer output.
+   */
   pb::AnalyzerOutput analyze(const pb::AnalyzerInput& input) {
     pb::AnalyzerOutput output;
 
@@ -40,9 +53,10 @@ private:
 } // namespace cloud
 
 int main(int argc, char** argv) {
-  const std::string usage("bin/analyzer-client"
-    " <SERVER_HOST:PORT>");
+  const std::string usage = std::string(argv[0]) +
+    " <SERVER_HOST:PORT>";
 
+  // Print help if requested
   for (int i = 1; i < argc; ++i) {
     if (std::string(argv[i]) == "-h" or std::string(argv[i]) == "--help") {
       std::cerr << "Analyzer Client" << std::endl
@@ -55,17 +69,21 @@ int main(int argc, char** argv) {
     }
   }
 
+  // Validate arguments
   if (argc != 2) {
     std::cerr << usage << std::endl;
     return EXIT_FAILURE;
   }
 
+  // Create analyzer client for passed server address
   const std::string server_address(argv[1]);
-
   cloud::AnalyzerClient client(server_address);
 
+  // Create protobuf input and output streams
   cloud::utils::InputProtobufStream pbin("/dev/stdin");
   cloud::utils::OutputProtobufStream pbout("/dev/stdout");
+
+  // Process messages from input stream and write results to output stream
   pb::AnalyzerInput input;
   while (pbin.read(input)) {
     try {

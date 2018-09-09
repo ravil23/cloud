@@ -3,6 +3,12 @@
 namespace cloud {
 namespace utils {
 
+/**
+ * \brief Convert string to other type.
+ * \tparam     T  Result type.
+ * \param[in]  s  Input string.
+ * \return  Converted value.
+ */
 template <class T>
 T lexical_cast(const std::string& s) {
   std::stringstream ss(s);

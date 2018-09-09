@@ -5,8 +5,9 @@
 
 
 int main(int argc, char** argv) {
-  const std::string usage("bin/unique_inputs_counter-server");
+  const std::string usage(argv[0]);
 
+  // Print help if requested
   for (int i = 1; i < argc; ++i) {
     if (std::string(argv[i]) == "-h" or std::string(argv[i]) == "--help") {
       std::cerr << "Analyzer Server: Unique Inputs Counter" << std::endl
@@ -20,11 +21,13 @@ int main(int argc, char** argv) {
     }
   }
 
+  // Validate arguments
   if (argc != 1) {
     std::cerr << usage << std::endl;
     return EXIT_FAILURE;
   }
 
+  // Initialize server
   cloud::Server<cloud::UniqueInputsCountAnalyzer> server;
 
   try {

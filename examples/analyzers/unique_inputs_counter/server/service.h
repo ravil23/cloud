@@ -11,8 +11,17 @@
 
 namespace cloud {
 
+/**
+ * \brief Implementation of unique inputs count service.
+ */
 class UniqueInputsCountAnalyzer final : public AnalyzerService {
 private:
+  /**
+   * \brief Analyzing implementation.
+   * \param[in]  input   Input object.
+   * \param[out] output  Output object.
+   * \return  Analyzing status.
+   */
   grpc::Status analyzeImpl(const pb::AnalyzerInput& input
     , pb::AnalyzerOutput& output) override final {
     DLOG(INFO) << "start  InputsCountAnalyzer::analyzeImpl " << input.id();

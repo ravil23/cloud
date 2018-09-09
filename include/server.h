@@ -10,9 +10,19 @@
 
 namespace cloud {
 
+/**
+ * \brief Template server class.
+ * \tparam  Service  GRPC service for running.
+ */
 template <class Service>
 class Server {
 public:
+  /**
+   * \brief Constructor.
+   * \throw   std::runtime_error  If environment variables are not valid.
+   * \eparam  SERVER_NAME  Name of server instance.
+   * \eparam  SERVER_PORT  Port of server instance.
+   */
   Server() {
     auto env_name = std::getenv("SERVER_NAME");
     if (not env_name) {
@@ -30,6 +40,9 @@ public:
     port_ = utils::lexical_cast<unsigned int>(env_port);
   }
 
+  /**
+   * \brief Run server and listen port on localhost.
+   */
   void run() {
     DLOG(INFO) << "Run server " << name_ << " on port " << port_ << "...";
 
