@@ -18,7 +18,7 @@ include(cmake/build.cmake)
 
 # ---[ Additional headers search path
 include_directories(
-  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/cpp/include
 )
 
 # ---[ Additional libraries search path
@@ -31,5 +31,4 @@ enable_testing()
 
 # ---[ Subdirectories
 add_subdirectory(protobuf)
-add_subdirectory(src)
-add_subdirectory(examples)
+add_subdirectory(cpp)

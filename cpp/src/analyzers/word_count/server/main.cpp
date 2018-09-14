@@ -1,7 +1,10 @@
 #include <string>
 
+#include "analyzer_service.h"
 #include "server.h"
-#include "service.h"
+#include "word_count_analyzer.h"
+
+using namespace cloud;
 
 
 int main(int argc, char** argv) {
@@ -10,9 +13,9 @@ int main(int argc, char** argv) {
   // Print help if requested
   for (int i = 1; i < argc; ++i) {
     if (std::string(argv[i]) == "-h" or std::string(argv[i]) == "--help") {
-      std::cerr << "Analyzer Server: Unique Inputs Counter" << std::endl
-        << "Produced categories:" << std::endl
-        << " - Unique Inputs Count" << std::endl
+      std::cerr << "Analyzer Server: Word Count" << std::endl
+        << "Produced output:" << std::endl
+        << " - Word Count" << std::endl
         << "Necessary environment variables:" << std::endl
         << " - SERVER_NAME" << std::endl
         << " - SERVER_PORT" << std::endl
@@ -28,7 +31,7 @@ int main(int argc, char** argv) {
   }
 
   // Initialize server
-  cloud::Server<cloud::UniqueInputsCountAnalyzer> server;
+  Server<AnalyzerService<WordCountAnalyzer>> server;
 
   try {
     server.run();

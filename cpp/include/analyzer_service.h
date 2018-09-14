@@ -11,6 +11,7 @@ namespace cloud {
 /**
  * \brief Virtual wrapper for grpc analyzer service.
  */
+template <class TAnalyzer>
 class AnalyzerService : public pb::Analyzer::Service {
 public:
   /**
@@ -28,21 +29,14 @@ public:
     }
 
     DLOG(INFO) << "start  AnalyzerService::analyze " << input_ptr->id();
-    auto status = analyzeImpl(*input_ptr, *output_ptr);
+    auto status = analyzer_.analyze(*input_ptr, *output_ptr);
     DLOG(INFO) << "finish AnalyzerService::analyze " << input_ptr->id();
 
     return status;    
   }
 
 private:
-  /**
-   * \brief Virtual method for analyzing implementation.
-   * \param[in]  input   Input object.
-   * \param[out] output  Output object.
-   * \return  Analyzing status.
-   */
-  virtual grpc::Status analyzeImpl(const pb::AnalyzerInput& input
-    , pb::AnalyzerOutput& output) = 0;
+  TAnalyzer analyzer_;
 };
 
 } // namespace cloud

@@ -7,116 +7,62 @@
 * [gtest](https://github.com/google/googletest)
 * [glog](https://github.com/google/glog)
 
-## Local instructions
+## Prerequirements
 
-### Prerequirements
-
-See `docker/env/Dockerfile` for dependecies installation on Ubuntu.
-
-### Build source
-
-All binaries collected in folder `build/bin` after executing commands:
+Add necessary environment variables:
 ```
-mkdir build
-cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make all -j8
-ctest
+source shell/environments.sh
 ```
 
-### Usage examples
-
-All commands run from build directory.
-
-#### Run server
+Install dependencies:
 ```
-export SERVER_NAME=UniqueInputsCounter; \
-export SERVER_PORT=9001; \
-bin/unique_inputs_counter-server
+sh shell/install_dependencies.sh
 ```
 
-#### Run client
+P.S. See `docker/env/Dockerfile` for C++ dependecies installation instructions.
+
+## Build
+
+Short pipeline script for building and testing C++ and Go binaries:
 ```
-bin/protobuf-writer AnalyzerInput 3 \
-    | bin/analyzer-client 0.0.0.0:9001 \
-    | bin/protobuf-reader AnalyzerOutput json
+sh shell/build_pipeline.sh
 ```
 
-## Docker instructions
+## Usage
 
-### Buid Environment image
+### Run backend server
 ```
-docker/env/make.sh
-```
-
-### Buid Cloud binaries image
-```
-docker/bin/make.sh
+(export SERVER_NAME=WordCount; export SERVER_PORT=9001; $CLOUD_BINARY/word_count_analyzer-server)
 ```
 
-### Usage examples
-
-Create network:
+### Run frontend server
 ```
-docker network create --driver bridge cloud-net
+(export WORD_COUNT_ANALYZER_ADDRESS=localhost:9001; export FRONTEND_PORT=8080; $CLOUD_BINARY/frontend-server)
 ```
 
-#### Run server
+### Send HTTP request
 ```
-docker run -dit --rm \
-    --name cloud-server \
-    --network cloud-net \
-    -e SERVER_NAME=UniqueInputsCounter \
-    -e SERVER_PORT=9001 \
-    cloud-bin \
-    bin/unique_inputs_counter-server
-```
-
-#### Run client
-```
-docker run -dit --rm \
-    --name cloud-client \
-    --network cloud-net \
-    cloud-bin
-docker exec -i cloud-client bin/protobuf-writer AnalyzerInput 3 \
-    | docker exec -i cloud-client bin/analyzer-client cloud-server:9001 \
-    | docker exec -i cloud-client bin/protobuf-reader AnalyzerOutput json
-```
-
-#### Clean created containers and network
-```
-docker stop cloud-server cloud-client
-docker network rm cloud-net
+curl -X POST -d "hello world hello" http://localhost:8080/word_count
 ```
 
 ## Documentation
 
 ### Read
 
-Open in your browser file `doc/html/index.html`
+Open in your browser file `docs/html/index.html`
 
 ### Generate
 ```
-doxygen doc/config.txt
+doxygen docs/config.txt
 ```
 
 ## TODO
-1. Features:
- - Add categories into analyzer lib.
- - Add manager.
- - Add routing.
- - Integration tests.
-2. Frontend:
- - [Apache Server](https://httpd.apache.org)
- - [Go Server](https://golang.org)
-3. Deploy to Google Cloud.
-4. Continuous integration:
- - [GitLab](https://about.gitlab.com)
- - [Jenkins](https://jenkins.io)
-5. Performance:
- - [JMeter](https://jmeter.apache.org)
+0. Refactor C++ and Go.
+1. Integration tests.
+ - [gmock](https://github.com/google/googlemock/tree/master/googlemock)
+2. Performance:
  - [Benchmark](https://github.com/google/benchmark)
-6. Build system:
+3. Build system:
  - [Bazel](https://github.com/bazelbuild/bazel)
-7. Metrics:
- - [Grafana](https://github.com/grafana/grafana)
+4. Update Docker images.
+5. Deploy to Google Cloud.
