@@ -2,14 +2,16 @@
 
 ## Buid
 
-### Environment image
+### Environment images
 ```
-docker/env/make.sh
+docker/cpp/env/make.sh
+docker/go/env/make.sh
 ```
 
-### Cloud binaries image
+### Cloud binaries images
 ```
-docker/bin/make.sh
+docker/cpp/bin/make.sh
+docker/go/bin/make.sh
 ```
 
 ## Usage

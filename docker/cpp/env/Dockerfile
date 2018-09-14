@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         cmake \
         wget \
         unzip \
-        make
+        make \
+        clang
 
 # Install Protobuf
 ENV PROTOBUF_VERSION 3.6.1
@@ -101,14 +102,6 @@ RUN cd /tmp \
     && cd / \
     && rm -rf gtest.zip googletest-release-${GTEST_VERSION} \
     && ldconfig
-
-# Clean unnecessary installations
-RUN apt-get remove -y\
-        cmake \
-        wget \
-        unzip \
-        make \
-    && rm -rf /var/lib/apt/lists/*
 
 # Define environment variable
 ENV NAME "Cloud Env"

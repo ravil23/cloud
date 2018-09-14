@@ -14,12 +14,15 @@ Add necessary environment variables:
 source shell/environments.sh
 ```
 
-Install dependencies:
+Install C++ dependencies:
 ```
-sh shell/install_dependencies.sh
+sh cpp/install_dependencies.sh
 ```
 
-P.S. See `docker/env/Dockerfile` for C++ dependecies installation instructions.
+Install Go dependencies:
+```
+sh go/install_dependencies.sh
+```
 
 ## Build
 
@@ -64,5 +67,4 @@ doxygen docs/config.txt
  - [Benchmark](https://github.com/google/benchmark)
 3. Build system:
  - [Bazel](https://github.com/bazelbuild/bazel)
-4. Update Docker images.
-5. Deploy to Google Cloud.
+4. Deploy to Google Cloud.
