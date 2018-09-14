@@ -68,3 +68,5 @@ doxygen docs/config.txt
 3. Build system:
  - [Bazel](https://github.com/bazelbuild/bazel)
 4. Deploy to Google Cloud.
+5. Parse JSON
+6. Check Docker
