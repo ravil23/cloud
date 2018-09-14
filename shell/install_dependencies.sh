@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ -z "$GOPATH" ]]; then
+if [ -z "$GOPATH" ]; then
   echo "ERROR: Environment variable GOPATH not found." 1>&2
   exit 1
 fi

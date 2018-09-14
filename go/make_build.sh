@@ -1,16 +1,16 @@
 #!/bin/sh
 
-if [[ -z "$CLOUD_ROOT" ]]; then
+if [ -z "$CLOUD_ROOT" ]; then
   echo "ERROR: Environment variable CLOUD_ROOT not found." 1>&2
   exit 1
 fi
 
-if [[ -z "$CLOUD_BINARY" ]]; then
+if [ -z "$CLOUD_BINARY" ]; then
   echo "ERROR: Environment variable CLOUD_BINARY not found." 1>&2
   exit 1
 fi
 
-if [[ -z "$GOPATH" ]]; then
+if [ -z "$GOPATH" ]; then
   echo "ERROR: Environment variable GOPATH not found." 1>&2
   exit 1
 fi
@@ -19,7 +19,7 @@ fi
 PROTO_INPUT_DIR="$CLOUD_ROOT"/protobuf
 PROTO_GO_OUT_DIR="$GOPATH"/src/protobuf
 
-if [[ -d "$PROTO_GO_OUT_DIR" ]]; then
+if [ -d "$PROTO_GO_OUT_DIR" ]; then
   rm -r "$PROTO_GO_OUT_DIR"
 fi
 mkdir "$PROTO_GO_OUT_DIR"
