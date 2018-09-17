@@ -11,7 +11,7 @@ http-request ||   || http-response |          |
         task ||   || result        |          |
              \/   ||               |          |
 +--------------------------------+ |          |
-|       Backend Manager (C++)    | |          |
+|       Backend Manager (Go)     | |          |
 +--------------------------------+ |          |
              ||   /\               |          |
   input data ||   || output data   | Protobuf |

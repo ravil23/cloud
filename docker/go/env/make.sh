@@ -5,8 +5,12 @@ if [ -z "$CLOUD_ROOT" ]; then
   exit 1
 fi
 
-IMAGE_NAME=cloud-go-env
-IMAGE_VERSION=$(git branch | grep \* | cut -d ' ' -f2)-$(git log -1 --format=%h)
+IMAGE_TAG="$1"
 
-docker build -t $IMAGE_NAME:$IMAGE_VERSION -f "$CLOUD_ROOT"/docker/go/env/Dockerfile "$CLOUD_ROOT"
-docker tag $IMAGE_NAME:$IMAGE_VERSION $IMAGE_NAME:latest
+if [ -z "$IMAGE_TAG" ]; then
+  IMAGE_TAG=latest
+fi
+
+IMAGE_NAME=cloud-go-env
+
+docker build -t $IMAGE_NAME:$IMAGE_TAG -f "$CLOUD_ROOT"/docker/go/env/Dockerfile "$CLOUD_ROOT"

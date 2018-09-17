@@ -5,5 +5,5 @@ if [ -z "$CLOUD_ROOT" ]; then
   exit 1
 fi
 
-sh "$CLOUD_ROOT"/docker/cpp/bin/make.sh
-sh "$CLOUD_ROOT"/docker/go/bin/make.sh
+sh "$CLOUD_ROOT"/docker/cpp/bin/make.sh "$1"
+sh "$CLOUD_ROOT"/docker/go/bin/make.sh "$1"

@@ -6,13 +6,16 @@
 * [gPRC 1.14.2](https://github.com/grpc/grpc/releases/tag/v1.14.2)
 * [gTEST 1.8.1](https://github.com/google/googletest/releases/tag/release-1.8.1)
 * [gLOG 0.3.5](https://github.com/google/glog/releases/tag/v0.3.5)
+* [GoLang 1.10.4](https://github.com/golang/go/releases/tag/go1.10.4)
 
 ## Prerequirements
 
 Add necessary environment variables:
 ```
-source shell/environments.sh
+. shell/env.sh
 ```
+
+Next installation scripts checked on Ubuntu 18.04.
 
 Install C++ dependencies:
 ```
@@ -28,7 +31,8 @@ sh go/install_dependencies.sh
 
 Short pipeline script for building and testing C++ and Go binaries:
 ```
-sh shell/build_pipeline.sh
+sh cpp/make_build.sh && sh cpp/make_test.sh
+sh go/make_build.sh && sh go/make_test.sh
 ```
 
 ## Usage
@@ -69,4 +73,3 @@ doxygen docs/config.txt
  - [Bazel](https://github.com/bazelbuild/bazel)
 4. Deploy to Google Cloud.
 5. Parse JSON
-6. Check Docker

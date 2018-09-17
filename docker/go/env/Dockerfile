@@ -1,5 +1,10 @@
-# Use an official Golang as parent
-FROM golang:1.11.0
+# Use an official Ubuntu as parent
+FROM ubuntu:18.04
+
+# Set environment variables
+ENV GOROOT="/usr/local/go"
+ENV GOPATH="/root/go"
+ENV PATH="$PATH:$GOROOT/bin:/$GOPATH/bin"
 
 # Copy installation script
 COPY ./go/install_dependencies.sh install_dependencies.sh

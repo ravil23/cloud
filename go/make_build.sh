@@ -29,4 +29,7 @@ protoc -I "$PROTO_INPUT_DIR" --go_out=plugins=grpc:"$PROTO_GO_OUT_DIR" "$PROTO_I
 # Build binaries
 mkdir -p "$CLOUD_BIN"
 
-go build -o "$CLOUD_BIN"/frontend-server "$CLOUD_ROOT"/go/src/frontend/
+# Build frontend
+cp -r "$CLOUD_ROOT"/go/src/frontend/ "$GOPATH"/src/ \
+  && go build -o "$CLOUD_BIN"/frontend-server frontend/ \
+  && rm -r "$CLOUD_ROOT"/go/src/frontend/
