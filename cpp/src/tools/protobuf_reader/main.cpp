@@ -116,7 +116,7 @@ int main(int argc, char** argv) {
 
   // Validate arguments
   if (argc != 3) {
-    std::cerr << "Usage:" << usage << std::endl;
+    std::cerr << "Usage: " << usage << std::endl;
     return EXIT_FAILURE;
   }
 

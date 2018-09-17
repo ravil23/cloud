@@ -35,12 +35,12 @@ sh shell/build_pipeline.sh
 
 ### Run backend server
 ```
-(export SERVER_NAME=WordCount; export SERVER_PORT=9001; $CLOUD_BINARY/word_count_analyzer-server)
+(export SERVER_NAME=WordCount; export SERVER_PORT=9001; $CLOUD_BIN/word_count_analyzer-server)
 ```
 
 ### Run frontend server
 ```
-(export WORD_COUNT_ANALYZER_ADDRESS=localhost:9001; export FRONTEND_PORT=8080; $CLOUD_BINARY/frontend-server)
+(export WORD_COUNT_ANALYZER_ADDRESS=localhost:9001; export FRONTEND_PORT=8080; $CLOUD_BIN/frontend-server)
 ```
 
 ### Send HTTP request

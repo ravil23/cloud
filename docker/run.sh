@@ -5,7 +5,7 @@ docker network create --driver bridge cloud-net
 
 # Run backend servers
 docker run -d --rm \
-    --name cloud-wordcount \
+    --name cloud-word_count \
     --network cloud-net \
     -e SERVER_NAME=WordCount \
     -e SERVER_PORT=9001 \

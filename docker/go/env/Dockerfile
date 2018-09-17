@@ -1,9 +1,11 @@
-# Use an official Ubuntu as parent
-FROM ubuntu:18.04
+# Use an official Golang as parent
+FROM golang:1.11.0
+
+# Copy installation script
+COPY ./go/install_dependencies.sh install_dependencies.sh
 
 # Install any needed packages specified
-ENV GO_VERSION 1.10
-RUN apt-get update && apt-get install golang-$GO_VERSION
+RUN sh install_dependencies.sh && rm install_dependencies.sh
 
 # Define environment variable
 ENV NAME "Cloud Go Env"

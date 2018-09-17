@@ -2,16 +2,15 @@
 FROM cloud-cpp-env:latest
 
 # Copy the current directory contents into the container at /cloud
-COPY . /tmp/source
+COPY . /source
 
 # Build
-RUN cd /tmp/source \
-    && source shell/environments.sh \
+RUN cd /source \
+    && . shell/env.sh \
     && sh cpp/make_build.sh \
     && sh cpp/make_test.sh \
-    && sh cpp/make_install.sh \
-    && cd / \
-    && rm -r /tmp/source
+    && sh cpp/make_install.sh /cloud/bin \
+    && rm -r /source
 
 # Set the working directory
 WORKDIR /cloud
