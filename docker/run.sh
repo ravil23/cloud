@@ -16,7 +16,7 @@ docker run -d --rm \
     -e SERVER_NAME=WordCount \
     -e SERVER_PORT=9001 \
     cloud-cpp-bin:$IMAGE_TAG \
-    bin/word_count-server
+    bin/word_count_analyzer-server
 
 # Run frontend server
 docker run -d --rm \
@@ -24,5 +24,6 @@ docker run -d --rm \
     --network cloud-net \
     -e WORD_COUNT_ANALYZER_ADDRESS=localhost:9001 \
     -e FRONTEND_PORT=8080 \
+    -p 8080:8080 \
     cloud-go-bin:$IMAGE_TAG \
     bin/frontend-server
