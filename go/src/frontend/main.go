@@ -1,66 +1,69 @@
 package main
 
 import (
-    "fmt"
-    "io/ioutil"
-    "log"
-    "net/http"
-    "os"
-    "time"
+  "fmt"
+  "io/ioutil"
+  "log"
+  "net/http"
+  "time"
 
-    "github.com/google/uuid"
-    "golang.org/x/net/context"
-    "google.golang.org/grpc"
-    pb "protobuf"
+  "golang.org/x/net/context"
+  "google.golang.org/grpc"
+  pb "protobuf"
 )
 
-func makeUUID() string {
-  new_uuid, err := uuid.NewUUID()
+func analyzeWordCount(c pb.AnalyzerClient, w http.ResponseWriter, r *http.Request) {
+  // Read request data
+  body, err := ioutil.ReadAll(r.Body)
   if err != nil {
-    log.Fatalf("can't generate new uuid: %v", err)
+    log.Fatalf("error reading body: %v", err)
+    return
   }
-  return new_uuid.String()
+
+  // Generate input
+  input := pb.AnalyzerInput{
+    Id: makeUUID(),
+    Timestamp: makeTimestamp(),
+    Text: string(body)}
+
+  // Contact the server and print out its response
+  ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+  defer cancel()
+
+  // Calculate output
+  output, err := c.Analyze(ctx, &input)
+  if err != nil {
+    log.Fatalf("could not analyze: %v", err)
+  }
+
+  // Write result
+  fmt.Fprintf(w, "%s", output)
 }
 
-func makeTimestamp() int64 {
-  return time.Now().UnixNano() / 1000000
-}
-
-func main() {
-  word_count_analyzer_address := os.Getenv("WORD_COUNT_ANALYZER_ADDRESS")
-  frontend_port := ":" + os.Getenv("FRONTEND_PORT")
-
-  // Set up a connection to the server.
+func run(frontend_port string, word_count_analyzer_address string) {
+  // Set up a connection to the server
+  log.Printf("Connecting to %s", word_count_analyzer_address)
   conn, err := grpc.Dial(word_count_analyzer_address, grpc.WithInsecure())
   if err != nil {
     log.Fatalf("did not connect: %v", err)
   }
   defer conn.Close()
+
+  // Create client
   c := pb.NewAnalyzerClient(conn)
 
-  // Create handler.
-  word_count_handler := func(w http.ResponseWriter, r *http.Request) {
-    // Contact the server and print out its response.
-    ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-    defer cancel()
-    
-    body, err := ioutil.ReadAll(r.Body)
-    if err != nil {
-      log.Fatalf("error reading body: %v", err)
-      return
-    }
+  // Configure handlers
+  http.HandleFunc("/word_count", func(w http.ResponseWriter, r *http.Request) {
+    analyzeWordCount(c, w, r)
+  })
 
-    output, err := c.Analyze(ctx, &pb.AnalyzerInput{
-      Id: makeUUID(),
-      Timestamp: makeTimestamp(),
-      Text: string(body)})
-    if err != nil {
-      log.Fatalf("could not analyze: %v", err)
-    }
-    fmt.Fprintf(w, "%s", output)
-  }
+  // Run server
+  log.Printf("Server Frontend listening on localhost:%s", frontend_port)
+  log.Fatal(http.ListenAndServe(":" + frontend_port, nil))
+}
 
-  // Configure and run server.
-  http.HandleFunc("/word_count", word_count_handler)
-  log.Fatal(http.ListenAndServe(frontend_port, nil))
+func main() {
+  frontend_port := getEnvironmentVariable("FRONTEND_PORT")
+  word_count_analyzer_address := getEnvironmentVariable("WORD_COUNT_ANALYZER_ADDRESS")
+  run(frontend_port, word_count_analyzer_address)
 }

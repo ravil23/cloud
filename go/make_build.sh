@@ -32,4 +32,4 @@ mkdir -p "$CLOUD_BIN"
 # Build frontend
 cp -r "$CLOUD_ROOT"/go/src/frontend/ "$GOPATH"/src/ \
   && go build -o "$CLOUD_BIN"/frontend-server frontend/ \
-  && rm -r "$CLOUD_ROOT"/go/src/frontend/
+  && rm -r "$GOPATH"/src/frontend/

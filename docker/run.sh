@@ -22,7 +22,7 @@ docker run -d --rm \
 docker run -d --rm \
     --name cloud-frontend \
     --network cloud-net \
-    -e WORD_COUNT_ANALYZER_ADDRESS=localhost:9001 \
+    -e WORD_COUNT_ANALYZER_ADDRESS=172.24.0.2:9001 \
     -e FRONTEND_PORT=8080 \
     -p 8080:8080 \
     cloud-go-bin:$IMAGE_TAG \
