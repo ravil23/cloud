@@ -64,7 +64,7 @@ doxygen docs/config.txt
 ```
 
 ## TODO
-0. Refactor C++ and Go.
+0. Parse JSON.
 1. Integration tests.
  - [gmock](https://github.com/google/googlemock/tree/master/googlemock)
 2. Performance:
@@ -72,4 +72,3 @@ doxygen docs/config.txt
 3. Build system:
  - [Bazel](https://github.com/bazelbuild/bazel)
 4. Deploy to Google Cloud.
-5. Parse JSON
