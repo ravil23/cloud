@@ -1,7 +1,14 @@
-build:
-  script:
-    - echo BUILD
+stages:
+  - build
+  - test
+  - deploy
 
-test:
+cpp_build:
+  stage: build
   script:
-    - echo TEST
+    - echo CPP BUILD
+
+cpp_test:
+  stage: test
+  script:
+    - echo CPP TEST
