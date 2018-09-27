@@ -7,3 +7,7 @@ stages:
   - build
   - test
   - deploy
+
+echo_test:
+  script:
+    - echo TESET
