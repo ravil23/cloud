@@ -2,10 +2,10 @@
 #include <sstream>
 #include <string>
 
-#include "AnalyzerService.pb.h"
+#include "protobuf/AnalyzerService.pb.h"
 
-#include "utils/protobuf_formatter.h"
-#include "utils/protobuf_stream.h"
+#include "cpp/utils/protobuf_formatter.h"
+#include "cpp/utils/protobuf_stream.h"
 
 
 namespace {

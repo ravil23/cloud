@@ -5,9 +5,9 @@
 
 #include <grpc++/grpc++.h>
 
-#include "AnalyzerService.grpc.pb.h"
+#include "protobuf/AnalyzerService.grpc.pb.h"
 
-#include "utils/protobuf_stream.h"
+#include "cpp/utils/protobuf_stream.h"
 
 
 namespace cloud {
