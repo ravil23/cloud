@@ -58,12 +58,12 @@ func run(frontend_port string, word_count_analyzer_address string) {
   })
 
   // Run server
-  log.Printf("Server Frontend listening on localhost:%s", frontend_port)
+  log.Printf("Server Request Handler listening on localhost:%s", frontend_port)
   log.Fatal(http.ListenAndServe(":" + frontend_port, nil))
 }
 
 func main() {
-  frontend_port := getEnvironmentVariable("FRONTEND_PORT")
+  frontend_port := getEnvironmentVariable("REQUEST_HANDLER_PORT")
   word_count_analyzer_address := getEnvironmentVariable("WORD_COUNT_ANALYZER_ADDRESS")
   run(frontend_port, word_count_analyzer_address)
 }
