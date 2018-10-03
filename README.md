@@ -1,9 +1,9 @@
 # Google Cloud Microservices C++
 
 ## Libraries and dependencies
-* [CMake 3.10.2](https://github.com/Kitware/CMake/releases/tag/v3.10.2)
+* [Bazel 0.17.2](https://github.com/bazelbuild/bazel/releases/tag/0.17.2)
 * [Protobuf 3.6.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.6.1)
-* [gPRC 1.14.2](https://github.com/grpc/grpc/releases/tag/v1.14.2)
+* [gPRC 1.15.1](https://github.com/grpc/grpc/releases/tag/v1.15.1)
 * [gTEST 1.8.1](https://github.com/google/googletest/releases/tag/release-1.8.1)
 * [gLOG 0.3.5](https://github.com/google/glog/releases/tag/v0.3.5)
 * [GoLang 1.10.4](https://github.com/golang/go/releases/tag/go1.10.4)

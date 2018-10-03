@@ -3,7 +3,7 @@
 #include <glog/logging.h>
 #include <grpc++/grpc++.h>
 
-#include "AnalyzerService.grpc.pb.h"
+#include "protobuf/AnalyzerService.grpc.pb.h"
 
 
 namespace cloud {

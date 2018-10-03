@@ -16,6 +16,7 @@ cc_library(
 )
 
 cc_library(
-  name = "server",
-  hdrs = ["server.h"],
+  name = "server_base",
+  hdrs = ["server_base.h"],
+  deps = [":lexical_cast"],
 )

@@ -2,7 +2,7 @@
 
 #include <grpc++/grpc++.h>
 
-#include "AnalyzerService.pb.h"
+#include "protobuf/AnalyzerService.pb.h"
 
 
 namespace cloud {

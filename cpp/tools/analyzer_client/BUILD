@@ -5,5 +5,6 @@ cc_binary(
     "//protobuf:cc_proto",
     "//cpp/utils:protobuf_formatter",
     "//cpp/utils:protobuf_stream",
+    "@grpc//:grpc++",
   ],
 )
