@@ -29,7 +29,7 @@ bazel run //cpp/analyzers/word_count:word_count_analyzer_test
 
 ### Run frontend server
 ```
-(export WORD_COUNT_ANALYZER_ADDRESS=localhost:9001; export FRONTEND_PORT=8080; bazel run //go/request_handler:frontend)
+(export WORD_COUNT_ANALYZER_ADDRESS=localhost:9001; export FRONTEND_PORT=8080; bazel run //go/request_handler:request_handler)
 ```
 
 ### Send HTTP request
@@ -49,11 +49,11 @@ doxygen docs/config.txt
 ```
 
 ## TODO
-0. Parse JSON.
-1. Integration tests.
+0. Bazel workspace over HTTP archive.
+1. Bazel go build.
+2. Parse JSON in request_handler.
+3. Integration tests.
  - [gmock](https://github.com/google/googlemock/tree/master/googlemock)
-2. Performance:
+4. Performance:
  - [Benchmark](https://github.com/google/benchmark)
-3. Build system:
- - [Bazel](https://github.com/bazelbuild/bazel)
-4. Deploy to Google Cloud.
+5. Deploy to Google Cloud.
