@@ -15,11 +15,11 @@ cc_proto_library(
   with_grpc = True,
 )
 
-# golang library with generated files
-load("@org_pubref_rules_protobuf//go:rules.bzl", "go_proto_library")
-go_proto_library(
-  name = "go_proto",
-  importpath = "go_proto",
-  protos = [":proto_files"],
-  with_grpc = True,
-)
+# # golang library with generated files
+# load("@org_pubref_rules_protobuf//go:rules.bzl", "go_proto_library")
+# go_proto_library(
+#   name = "go_proto",
+#   importpath = "go_proto",
+#   protos = [":proto_files"],
+#   with_grpc = True,
+# )

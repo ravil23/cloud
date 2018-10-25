@@ -1,7 +1,7 @@
 # Google Cloud Microservices C++
 
 ## Libraries and dependencies
-* [Bazel 0.17.2](https://github.com/bazelbuild/bazel/releases/tag/0.17.2)
+* [Bazel 0.18.0](https://github.com/bazelbuild/bazel/releases/tag/0.18.0)
 * [Protobuf 3.6.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.6.1)
 * [gPRC 1.15.1](https://github.com/grpc/grpc/releases/tag/v1.15.1)
 * [gTEST 1.8.1](https://github.com/google/googletest/releases/tag/release-1.8.1)
@@ -10,41 +10,26 @@
 
 ## Prerequirements
 
-Add necessary environment variables:
-```
-. shell/env.sh
-```
-
-Next installation scripts checked on Ubuntu 18.04.
-
-Install C++ dependencies:
-```
-sh cpp/install_dependencies.sh
-```
-
-Install Go dependencies:
-```
-sh go/install_dependencies.sh
-```
+[Install Bazel](https://docs.bazel.build/versions/master/install.html)
 
 ## Build
 
 Short pipeline script for building and testing C++ and Go binaries:
 ```
-sh cpp/make_build.sh && sh cpp/make_test.sh
-sh go/make_build.sh && sh go/make_test.sh
+bazel build //...
+bazel run //cpp/analyzers/word_count:word_count_analyzer_test
 ```
 
 ## Usage
 
 ### Run backend server
 ```
-(export SERVER_NAME=WordCount; export SERVER_PORT=9001; $CLOUD_BIN/word_count_analyzer-server)
+(export SERVER_NAME=WordCount; export SERVER_PORT=9001; bazel run //cpp/analyzers/word_count:word_count_analyzer_server)
 ```
 
 ### Run frontend server
 ```
-(export WORD_COUNT_ANALYZER_ADDRESS=localhost:9001; export FRONTEND_PORT=8080; $CLOUD_BIN/frontend-server)
+(export WORD_COUNT_ANALYZER_ADDRESS=localhost:9001; export FRONTEND_PORT=8080; bazel run //go/request_handler:frontend)
 ```
 
 ### Send HTTP request
